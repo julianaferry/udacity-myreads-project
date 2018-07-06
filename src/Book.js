@@ -9,13 +9,13 @@ class Book extends Component{
     };
 
     render(){
-        const { book } = this.props;
+        const {book} = this.props;
 
         return(
             <div className="book" id={book.id}>
                 <div className="book-top">
                     <div className="book-cover" style={{backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
-                    <ShelfChanger
+                    <ChangeShelf
                         book={book}
                         changeShelf={this.props.changeShelf}/>
                 </div>

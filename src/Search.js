@@ -9,13 +9,12 @@ class Search extends Component{
         books: PropTypes.array.isRequired,
         changeShelf: PropTypes.func.isRequired
     };
-
+//trim
     updateQuery = (query) => {
         this.props.updateQuery(query.trim());
     };
-
+//unmount
     componentWillUnmount(){
-        // Reset search query
         this.props.updateQuery("");
     }
 

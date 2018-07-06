@@ -45,7 +45,7 @@ class BooksApp extends React.Component {
         if(query){
             BooksAPI.search(query, this.MAX_RESULTS).then((books) => {
                 // if the BookAPI.search worked properly, this would be unnecessary
-                if(books.length){
+                if (books.length){
                     books.forEach((book, index) => {
                         let myBook = this.state.books.find((book) => book.id === book.id);
                         book.shelf = myBook ? myBook.shelf : 'none';
@@ -75,17 +75,17 @@ class BooksApp extends React.Component {
                         </div>
                         <div className="list-books-content">
                             <div>
-                                <Shelf
+                                <BookShelf
                                     title="Currently Reading"
                                     books={this.getShelfBooks("currentlyReading")}
                                     changeShelf={this.changeShelf}
                                 />
-                                <Shelf
+                                <BookShelf
                                     title="Want to Read"
                                     books={this.getShelfBooks("wantToRead")}
                                     changeShelf={this.changeShelf}
                                 />
-                                <Shelf
+                                <BookShelf
                                     title="Read"
                                     books={this.getShelfBooks("read")}
                                     changeShelf={this.changeShelf}
