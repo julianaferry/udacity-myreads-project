@@ -24,17 +24,16 @@ class BooksApp extends React.Component {
         });
     }
 
-    getShelfBooks(shelfName){
+    getBooksShelf(shelfName){
         return this.state.books.filter((book) => book.shelf === shelfName)
     }
 
     changeShelf = (book, newShelf) => {
         BooksAPI.update(book, newShelf).then(() => {
-            // Update the local copy of the book
+            // Update shelf
             book.shelf = newShelf;
 
-            // Filter out the book and append it to the end of the list
-            // so it appears at the end of whatever shelf it was added to.
+           //filter
             this.setState(state => ({
                 books: state.books.filter(book => book.id !== book.id).concat([ book ])
             }));
@@ -44,8 +43,8 @@ class BooksApp extends React.Component {
     updateQuery = (query) => {
         if(query){
             BooksAPI.search(query, this.MAX_RESULTS).then((books) => {
-                // if the BookAPI.search worked properly, this would be unnecessary
-                if (books.length){
+         
+                if(books.length){
                     books.forEach((book, index) => {
                         let myBook = this.state.books.find((book) => book.id === book.id);
                         book.shelf = myBook ? myBook.shelf : 'none';
@@ -56,7 +55,6 @@ class BooksApp extends React.Component {
                         searchBooks: books
                     });
                 }
-
             });
             } else {
             this.setState({
@@ -77,17 +75,17 @@ class BooksApp extends React.Component {
                             <div>
                                 <BookShelf
                                     title="Currently Reading"
-                                    books={this.getShelfBooks("currentlyReading")}
+                                    books={this.getBooksShelf("currentlyReading")}
                                     changeShelf={this.changeShelf}
                                 />
                                 <BookShelf
                                     title="Want to Read"
-                                    books={this.getShelfBooks("wantToRead")}
+                                    books={this.getBooksShelf("wantToRead")}
                                     changeShelf={this.changeShelf}
                                 />
                                 <BookShelf
                                     title="Read"
-                                    books={this.getShelfBooks("read")}
+                                    books={this.getBooksShelf("read")}
                                     changeShelf={this.changeShelf}
                                 />
                             </div>
@@ -104,7 +102,8 @@ class BooksApp extends React.Component {
                         updateQuery={this.updateQuery}
                         changeShelf={this.changeShelf}
                     />
-                )}/>
+                )}
+                />
             </div>
         )
     }
