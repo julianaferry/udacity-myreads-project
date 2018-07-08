@@ -20,22 +20,25 @@ class BooksApp extends React.Component {
 
     fetchBooks() {
         BooksAPI.getAll().then((books) => {
-            this.setState({books});
+            this.setState({
+                books
+            });
         });
     }
 
     getBooksShelf(shelfName){
-        return this.state.books.filter((book) => book.shelf === shelfName)
+        return this.state.books.filter((b) => b.shelf === shelfName)
     }
 
     changeShelf = (book, newShelf) => {
         BooksAPI.update(book, newShelf).then(() => {
             // Update shelf
             book.shelf = newShelf;
+         
 
            //filter
             this.setState(state => ({
-                books: state.books.filter(book => book.id !== book.id).concat([ book ])
+                books: state.books.filter(b => b.id !== book.id).concat([ book ]) 
             }));
         });
     };
@@ -43,10 +46,11 @@ class BooksApp extends React.Component {
     updateQuery = (query) => {
         if(query){
             BooksAPI.search(query, this.MAX_RESULTS).then((books) => {
+              
          
                 if(books.length){
                     books.forEach((book, index) => {
-                        let myBook = this.state.books.find((book) => book.id === book.id);
+                        let myBook = this.state.books.find((b) => b.id === book.id);
                         book.shelf = myBook ? myBook.shelf : 'none';
                         books[index] = book;
                     });
@@ -58,7 +62,8 @@ class BooksApp extends React.Component {
             });
             } else {
             this.setState({
-                searchBooks: []
+                searchBooks: [],
+                state:[]
             });
         }
     };
@@ -77,16 +82,19 @@ class BooksApp extends React.Component {
                                     title="Currently Reading"
                                     books={this.getBooksShelf("currentlyReading")}
                                     changeShelf={this.changeShelf}
+                                  
                                 />
                                 <BookShelf
                                     title="Want to Read"
                                     books={this.getBooksShelf("wantToRead")}
                                     changeShelf={this.changeShelf}
+                                 
                                 />
                                 <BookShelf
                                     title="Read"
                                     books={this.getBooksShelf("read")}
                                     changeShelf={this.changeShelf}
+                                   
                                 />
                             </div>
                         </div>
@@ -94,7 +102,8 @@ class BooksApp extends React.Component {
                             <Link to="/search">Add a book</Link>
                         </div>
                     </div>
-                )}/>
+                )}
+                />
 
                 <Route path="/search" render={({ history }) => (
                     <Search

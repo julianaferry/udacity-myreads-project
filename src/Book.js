@@ -1,30 +1,25 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import ChangeShelf from "./ChangeShelf";
 
-class Book extends Component{
-    static propTypes = {
-        book: PropTypes.object.isRequired,
-        changeShelf: PropTypes.func.isRequired
-    };
+const Book = (props) => {
+  
+    const {book, changeShelf} = props;
 
-    render(){
-        const {book} = this.props;
-
+    const coverImg = book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : "No images available";
+   
         return(
             <div className="book" id={book.id}>
                 <div className="book-top">
-                    <div className="book-cover" style={{backgroundImage: `url("${book.imageLinks.thumbnail}")` }}></div>
+                    <div className="book-cover" style={{backgroundImage: `url("${coverImg}")` }}></div>
                     <ChangeShelf
                         book={book}
-                        changeShelf={this.props.changeShelf}/>
+                        changeShelf={changeShelf}/>
                 </div>
                 
                 <div className="book-title">{book.name}</div>
                 <div className="book-authors">{book.authors}</div>
             </div>
         )
-    }
-}
-
+    };
+    
 export default Book;
