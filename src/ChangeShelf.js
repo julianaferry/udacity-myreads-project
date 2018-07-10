@@ -28,6 +28,7 @@ class ChangeShelf extends Component{
         });
     }
 
+
     render(){
         return(
             <div className="book-shelf-changer">

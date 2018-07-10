@@ -43,31 +43,6 @@ class BooksApp extends React.Component {
         });
     };
 
-    updateQuery = (query) => {
-        if(query){
-            BooksAPI.search(query, this.MAX_RESULTS).then((books) => {
-              
-         
-                if(books.length){
-                    books.forEach((book, index) => {
-                        let myBook = this.state.books.find((b) => b.id === book.id);
-                        book.shelf = myBook ? myBook.shelf : 'none';
-                        books[index] = book;
-                    });
-
-                    this.setState({
-                        searchBooks: books
-                    });
-                }
-            });
-            } else {
-            this.setState({
-                searchBooks: [],
-                state:[]
-            });
-        }
-    };
-
     render() {
         return (
             <div className="app">

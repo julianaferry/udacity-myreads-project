@@ -3,20 +3,46 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Debounce } from "react-throttle";
 import Book from "./Book";
+import * as BooksAPI from "./BooksAPI";
 
 class Search extends Component{
     static propTypes = {
         books: PropTypes.array.isRequired,
         changeShelf: PropTypes.func.isRequired
     };
+
 //trim
     updateQuery = (query) => {
         this.props.updateQuery(query.trim());
     };
+    
 //unmount
     componentWillUnmount(){
         this.props.updateQuery("");
     }
+
+    updateQuery = (query) => {
+     
+            BooksAPI.search(query, this.MAX_RESULTS).then((books) => {
+              
+                    books.forEach((book, index) => {
+                        let myBook = this.state.books.find((b) => b.id === book.id);
+                        book.shelf = myBook ? myBook.shelf : 'none';
+                        books[index] = book;
+                    });
+
+                    this.setState({
+                        searchBooks: books
+                    });
+                
+            });
+            
+            this.setState({
+                searchBooks: [],
+                state:[]
+            });
+        
+    };
 
     render(){
         return(
