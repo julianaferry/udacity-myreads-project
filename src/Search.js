@@ -6,27 +6,31 @@ import Book from "./Book";
 import * as BooksAPI from "./BooksAPI";
 
 class Search extends Component{
+    
     static propTypes = {
         books: PropTypes.array.isRequired,
         changeShelf: PropTypes.func.isRequired
     };
 
-//trim
+    state = {
+        books: [],
+        searchBooks: []
+    };
+
     updateQuery = (query) => {
         this.props.updateQuery(query.trim());
     };
-    
-//unmount
+
     componentWillUnmount(){
         this.props.updateQuery("");
     }
 
     updateQuery = (query) => {
      
-            BooksAPI.search(query, this.MAX_RESULTS).then((books) => {
+            BooksAPI.search(query).then((books) => {
               
                     books.forEach((book, index) => {
-                        let myBook = this.state.books.find((b) => b.id === book.id);
+                        let myBook = this.props.find((b) => b.id === book.id);
                         book.shelf = myBook ? myBook.shelf : 'none';
                         books[index] = book;
                     });
@@ -61,7 +65,7 @@ class Search extends Component{
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {this.props.books.map((book) => (
+                        {this.props.books && this.props.books.map((book) => (
                             <li key={book.id} className="contact-list-item">
                                 <Book
                                     book={book}

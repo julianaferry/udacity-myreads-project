@@ -7,11 +7,8 @@ import "./App.css";
 
 
 class BooksApp extends React.Component {
-    MAX_RESULTS = 30;
-
     state = {
-        books: [],
-        searchBooks: []
+        books: []
     };
 
     componentDidMount() {
