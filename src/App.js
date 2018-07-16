@@ -8,7 +8,8 @@ import "./App.css";
 
 class BooksApp extends React.Component {
     state = {
-        books: []
+        books: [],
+        searchBooks:[]
     };
 
     componentDidMount() {
@@ -22,6 +23,7 @@ class BooksApp extends React.Component {
             });
         });
     }
+   
 
     getBooksShelf(shelfName){
         return this.state.books.filter((b) => b.shelf === shelfName)
@@ -32,7 +34,7 @@ class BooksApp extends React.Component {
             // Update shelf
             book.shelf = newShelf;
          
-           //filter
+           //filter books list
             this.setState(state => ({
                 books: state.books.filter(b => b.id !== book.id).concat([ book ]) 
             }));
@@ -89,4 +91,4 @@ class BooksApp extends React.Component {
     }
 }
 
-export default BooksApp
+export default BooksApp;
