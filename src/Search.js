@@ -16,20 +16,19 @@ class Search extends Component{
         searchBooks: []
     };
    
-   
     updateQuery = (query) => {
         BooksAPI.search(query).then((books) => {
                
-            books.forEach((book, index) => {
-                    let myBook = this.props.books.find((b) => b.id === book.id);
-                    book.shelf = myBook ? myBook.shelf : 'none';
-                    books[index] = book;
-                });
+            books && books.forEach((book, index) => {
+                let myBook = this.props.books.find((b) => b.id === book.id);
+                book.shelf = myBook ? myBook.shelf : 'none';
+                books[index] = book;
+            });
 
                 this.setState({
                     searchBooks: books
                 });
-        });
+            });
         
             this.setState({
                 searchBooks: []
