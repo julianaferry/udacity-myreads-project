@@ -6,10 +6,6 @@ import Book from "./Book";
 import * as BooksAPI from "./BooksAPI";
 
 class Search extends Component{
-    constructor(props) {
-        super(props);
-        this.updateQuery = this.updateQuery.bind(this);
-    }
     static propTypes = {
         books: PropTypes.array.isRequired,
         changeShelf: PropTypes.func.isRequired
@@ -20,38 +16,27 @@ class Search extends Component{
         searchBooks: []
     };
    
-    componentWillUnmount(){
-        this.props.updateQuery('');
-    }
-
-
+   
     updateQuery = (query) => {
-       
-            BooksAPI.search(query).then((books) => {
+        BooksAPI.search(query).then((books) => {
                
-              const array = [{books}];
-              
-                    array.forEach((book, index) => {
-                        let myBook = this.props.books.find((b) => b.id === book.id);
-                        book.shelf = myBook ? myBook.shelf : 'none';
-                        books[index] = book;
-                    });
+            books.forEach((book, index) => {
+                    let myBook = this.props.books.find((b) => b.id === book.id);
+                    book.shelf = myBook ? myBook.shelf : 'none';
+                    books[index] = book;
+                });
 
-                    this.setState({
-                        searchBooks: books
-                    });
-                
-
-            });
-            
+                this.setState({
+                    searchBooks: books
+                });
+        });
+        
             this.setState({
                 searchBooks: []
-            });
-        
-    };
+        });
+};
 
     render(){
-      
         return(
             <div className="search-books">
                 <div className="search-books-bar">
@@ -68,7 +53,7 @@ class Search extends Component{
                 </div>
                 <div className="search-books-results">
                     <ol className="books-grid">
-                        {this.props.books && this.props.books.map((book) => (
+                    {this.state.searchBooks && this.state.searchBooks.map((book) => (
                             <li key={book.id} className="contact-list-item">
                                 <Book
                                     book={book}
